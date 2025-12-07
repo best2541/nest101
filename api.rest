@@ -1,6 +1,10 @@
 GET  http://localhost:3000/users
 Content-Type: application/json
+###
 
+GET  http://localhost:3000/products
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.yoC8thfbEddeeCQNzwK6owgfAPPOG40T8caqt5FmEZk
 ###
 
 POST http://localhost:3000/users

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -6,10 +6,11 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/user.module';
+import { AuthMiddleware } from './auth/auth.middleware';
 
 @Module({
   imports: [
-     TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
       port: 3306,
@@ -29,4 +30,13 @@ import { UsersModule } from './users/user.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'users', method: RequestMethod.ALL }
+      )
+      .forRoutes('*');
+  }
+}
